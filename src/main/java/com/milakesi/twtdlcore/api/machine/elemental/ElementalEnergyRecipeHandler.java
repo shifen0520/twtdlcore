@@ -39,9 +39,9 @@ public class ElementalEnergyRecipeHandler implements IRecipeHandler<EnergyStack>
           long totalEU = stack.getTotalEU();
           int totalSteam = GTMath.saturatedCast((long)Math.ceil((double)totalEU * this.conversionRate));
           if (totalSteam > 0) {
-            FluidIngredient steam = io == IO.IN ? FluidIngredient.of(GTYSMaterials.Elemental.getFluidTag(), totalSteam) : FluidIngredient.of(GTYSMaterials.Elemental.getFluid(totalSteam));
+            FluidIngredient elemental = io == IO.IN ? FluidIngredient.of(GTYSMaterials.Elemental.getFluidTag(), totalSteam) : FluidIngredient.of(GTYSMaterials.Elemental.getFluid(totalSteam));
             ArrayList<FluidIngredient> list = new ArrayList();
-            list.add(steam);
+            list.add(elemental);
             List<FluidIngredient> leftElemental = this.elementalTank.handleRecipeInner(io, recipe, list, simulate);
             if (leftElemental != null && !leftElemental.isEmpty()) {
               totalEU = (long)((double)((FluidIngredient)leftElemental.get(0)).getAmount() / this.conversionRate);
