@@ -1,7 +1,5 @@
 package com.milakesi.twtdlcore;
 
-import com.milakesi.twtdlcore.common.data.GTYSMaterials;
-import com.milakesi.twtdlcore.common.registry.elemental.*;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
@@ -37,35 +35,43 @@ public class Twtdlcore {
   private static final Logger LOGGER = LogUtils.getLogger();
 
   public static final DeferredRegister<Block> BLOCKS =
-          DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
+      DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
   public static final DeferredRegister<Item> ITEMS =
-          DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
+      DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
   public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
-          DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
+      DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
   public static final RegistryObject<Block> EXAMPLE_BLOCK =
-          BLOCKS.register("example_block",
-                  () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)));
+      BLOCKS.register(
+          "example_block",
+          () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)));
   public static final RegistryObject<Item> EXAMPLE_BLOCK_ITEM =
-          ITEMS.register("example_block",
-                  () -> new BlockItem(EXAMPLE_BLOCK.get(), new Item.Properties()));
+      ITEMS.register(
+          "example_block", () -> new BlockItem(EXAMPLE_BLOCK.get(), new Item.Properties()));
   public static final RegistryObject<Item> EXAMPLE_ITEM =
-          ITEMS.register("example_item",
-                  () -> new Item(new Item.Properties()
-                          .food(new FoodProperties.Builder()
-                                  .alwaysEat()
-                                  .nutrition(1)
-                                  .saturationMod(2f)
-                                  .build())));
+      ITEMS.register(
+          "example_item",
+          () ->
+              new Item(
+                  new Item.Properties()
+                      .food(
+                          new FoodProperties.Builder()
+                              .alwaysEat()
+                              .nutrition(1)
+                              .saturationMod(2f)
+                              .build())));
   public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB =
-          CREATIVE_MODE_TABS.register("example_tab",
-                  () -> CreativeModeTab.builder()
-                          .withTabsBefore(CreativeModeTabs.COMBAT)
-                          .icon(() -> EXAMPLE_ITEM.get().getDefaultInstance())
-                          .displayItems((parameters, output) -> {
-                            output.accept(EXAMPLE_ITEM.get());
-                          })
-                          .build());
+      CREATIVE_MODE_TABS.register(
+          "example_tab",
+          () ->
+              CreativeModeTab.builder()
+                  .withTabsBefore(CreativeModeTabs.COMBAT)
+                  .icon(() -> EXAMPLE_ITEM.get().getDefaultInstance())
+                  .displayItems(
+                      (parameters, output) -> {
+                        output.accept(EXAMPLE_ITEM.get());
+                      })
+                  .build());
 
   public Twtdlcore(FMLJavaModLoadingContext context) {
     IEventBus modEventBus = context.getModEventBus();
@@ -81,8 +87,10 @@ public class Twtdlcore {
     context.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
     LOGGER.info("Twtdlcore mod initialized!");
+  }
 
-    ElementalMachines.init();
+  public static int id(String s) {
+    return 0;
   }
 
   private void commonSetup(final FMLCommonSetupEvent event) {
@@ -97,8 +105,7 @@ public class Twtdlcore {
   }
 
   private void addCreative(BuildCreativeModeTabContentsEvent event) {
-    if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
-      event.accept(EXAMPLE_BLOCK_ITEM);
+    if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) event.accept(EXAMPLE_BLOCK_ITEM);
   }
 
   @SubscribeEvent
